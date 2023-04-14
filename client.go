@@ -27,6 +27,7 @@ func NewSession(p Profile) *Session {
 	}
 	client, _ := tlsclient.NewHttpClient(tlsclient.NewNoopLogger(), options...)
 	session := &Session{client: client}
+	session.Header = make(Header)
 	session.Injection = func(r Response, e error) (Response, error) {
 		return r, e
 	}
