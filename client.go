@@ -6,6 +6,9 @@ import (
 
 type Session struct {
 	client tlsclient.HttpClient
+	Header Header
+	Proxy  string
+	Usage  int
 }
 
 func NewSession(p Profile) *Session {
