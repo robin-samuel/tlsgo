@@ -23,6 +23,7 @@ type Request struct {
 	Text    string
 	Proxy   string
 	Size    int
+	http    *http.Request
 }
 
 type Options struct {
@@ -57,6 +58,12 @@ func NewRequest(method Method, url string, options *Options) Request {
 		request.Proxy = options.Proxy
 	}
 	return request
+}
+
+func (r *Request) Raw() []byte {
+	dump, _ := httputil.DumpRequest(r.http, true)
+	raw := append(dump, r.Body...)
+	return raw
 }
 
 func (s *Session) Do(request Request) (Response, error) {
@@ -154,6 +161,7 @@ func (s *Session) Do(request Request) (Response, error) {
 	request.Cookies = req.Cookies()
 	request.Body = bodyReq
 	request.Text = string(bodyReq)
+	request.http = req
 
 	// Update Response
 	response.Request = request
@@ -167,6 +175,7 @@ func (s *Session) Do(request Request) (Response, error) {
 	response.Body = bodyRes
 	response.Text = string(bodyRes)
 	response.Size = len(dumpResp)
+	response.http = resp
 
 	// Update Session
 	s.addUrl(response.URL)

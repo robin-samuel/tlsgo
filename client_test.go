@@ -1,6 +1,7 @@
 package tlsgo_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/robin-samuel/tlsgo"
@@ -12,5 +13,7 @@ func TestClient(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(response.Status)
+	fmt.Println(string(response.Request.Raw()))
+	fmt.Println(string(response.Raw()))
+	t.Log(response.StatusCode)
 }
