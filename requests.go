@@ -156,6 +156,7 @@ func (s *Session) Do(request Request) (Response, error) {
 	response.Size = len(dumpResp)
 
 	// Update Session
+	s.addUrl(response.URL)
 	s.Usage += request.Size + response.Size
 
 	return s.Injection(response, err)

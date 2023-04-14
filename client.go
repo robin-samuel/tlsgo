@@ -1,11 +1,15 @@
 package tlsgo
 
 import (
+	"net/url"
+
 	tlsclient "github.com/bogdanfinn/tls-client"
 )
 
 type Session struct {
 	client tlsclient.HttpClient
+	urls   []url.URL
+
 	Header Header
 	Proxy  string
 	Usage  int
@@ -27,4 +31,14 @@ func NewSession(p Profile) *Session {
 		return r, e
 	}
 	return session
+}
+
+func (s *Session) GetCookiesDict() map[string]string {
+	cookies := make(map[string]string)
+	for _, u := range s.urls {
+		for _, c := range s.client.GetCookies(&u) {
+			cookies[c.Name] = c.Value
+		}
+	}
+	return cookies
 }
