@@ -3,7 +3,7 @@ module tlsgo
 go 1.20
 
 require (
-	github.com/bogdanfinn/fhttp v0.5.20 // indirect
+	github.com/bogdanfinn/fhttp v0.5.20
 	github.com/bogdanfinn/tls-client v1.3.9
 )
 
