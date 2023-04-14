@@ -9,6 +9,8 @@ type Session struct {
 	Header Header
 	Proxy  string
 	Usage  int
+
+	Injection func(Response, error) (Response, error)
 }
 
 func NewSession(p Profile) *Session {
@@ -20,5 +22,9 @@ func NewSession(p Profile) *Session {
 		tlsclient.WithCookieJar(jar),
 	}
 	client, _ := tlsclient.NewHttpClient(tlsclient.NewNoopLogger(), options...)
-	return &Session{client: client}
+	session := &Session{client: client}
+	session.Injection = func(r Response, e error) (Response, error) {
+		return r, e
+	}
+	return session
 }

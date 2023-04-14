@@ -158,5 +158,5 @@ func (s *Session) Do(request Request) (Response, error) {
 	// Update Session
 	s.Usage += request.Size + response.Size
 
-	return response, nil
+	return s.Injection(response, err)
 }
