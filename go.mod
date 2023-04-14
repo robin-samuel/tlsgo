@@ -1,4 +1,4 @@
-module tlsgo
+module github.com/robin-samuel/tlsgo
 
 go 1.20
 
