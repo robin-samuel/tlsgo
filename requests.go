@@ -160,3 +160,99 @@ func (s *Session) Do(request Request) (Response, error) {
 
 	return s.Injection(response, err)
 }
+
+func (s *Session) Get(url string, options Options) (Response, error) {
+	request := Request{
+		Method:  GET,
+		Url:     url,
+		Params:  options.Params,
+		Header:  options.Header,
+		Cookies: options.Cookies,
+		Proxy:   options.Proxy,
+	}
+	return s.Do(request)
+}
+
+func (s *Session) Post(url string, options Options) (Response, error) {
+	request := Request{
+		Method:  POST,
+		Url:     url,
+		Params:  options.Params,
+		Header:  options.Header,
+		Cookies: options.Cookies,
+		Data:    options.Data,
+		Json:    options.Json,
+		Proxy:   options.Proxy,
+	}
+	return s.Do(request)
+}
+
+func (s *Session) Put(url string, options Options) (Response, error) {
+	request := Request{
+		Method:  PUT,
+		Url:     url,
+		Params:  options.Params,
+		Header:  options.Header,
+		Cookies: options.Cookies,
+		Data:    options.Data,
+		Json:    options.Json,
+		Proxy:   options.Proxy,
+	}
+	return s.Do(request)
+}
+
+func (s *Session) Patch(url string, options Options) (Response, error) {
+	request := Request{
+		Method:  PATCH,
+		Url:     url,
+		Params:  options.Params,
+		Header:  options.Header,
+		Cookies: options.Cookies,
+		Data:    options.Data,
+		Json:    options.Json,
+		Proxy:   options.Proxy,
+	}
+	return s.Do(request)
+}
+
+func (s *Session) Delete(url string, options Options) (Response, error) {
+	request := Request{
+		Method:  DELETE,
+		Url:     url,
+		Params:  options.Params,
+		Header:  options.Header,
+		Cookies: options.Cookies,
+		Data:    options.Data,
+		Json:    options.Json,
+		Proxy:   options.Proxy,
+	}
+	return s.Do(request)
+}
+
+func (s *Session) Head(url string, options Options) (Response, error) {
+	request := Request{
+		Method:  HEAD,
+		Url:     url,
+		Params:  options.Params,
+		Header:  options.Header,
+		Cookies: options.Cookies,
+		Data:    options.Data,
+		Json:    options.Json,
+		Proxy:   options.Proxy,
+	}
+	return s.Do(request)
+}
+
+func (s *Session) Options(url string, options Options) (Response, error) {
+	request := Request{
+		Method:  OPTIONS,
+		Url:     url,
+		Params:  options.Params,
+		Header:  options.Header,
+		Cookies: options.Cookies,
+		Data:    options.Data,
+		Json:    options.Json,
+		Proxy:   options.Proxy,
+	}
+	return s.Do(request)
+}
