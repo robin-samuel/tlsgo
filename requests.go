@@ -46,6 +46,19 @@ const (
 	OPTIONS Method = "OPTIONS"
 )
 
+func NewRequest(method Method, url string, options *Options) Request {
+	request := Request{Method: method, Url: url}
+	if options != nil {
+		request.Params = options.Params
+		request.Header = options.Header
+		request.Cookies = options.Cookies
+		request.Data = options.Data
+		request.Json = options.Json
+		request.Proxy = options.Proxy
+	}
+	return request
+}
+
 func (s *Session) Do(request Request) (Response, error) {
 
 	var response Response
@@ -162,98 +175,30 @@ func (s *Session) Do(request Request) (Response, error) {
 	return s.Injection(response, err)
 }
 
-func (s *Session) Get(url string, options Options) (Response, error) {
-	request := Request{
-		Method:  GET,
-		Url:     url,
-		Params:  options.Params,
-		Header:  options.Header,
-		Cookies: options.Cookies,
-		Proxy:   options.Proxy,
-	}
-	return s.Do(request)
+func (s *Session) Get(url string, options *Options) (Response, error) {
+	return s.Do(NewRequest(GET, url, options))
 }
 
-func (s *Session) Post(url string, options Options) (Response, error) {
-	request := Request{
-		Method:  POST,
-		Url:     url,
-		Params:  options.Params,
-		Header:  options.Header,
-		Cookies: options.Cookies,
-		Data:    options.Data,
-		Json:    options.Json,
-		Proxy:   options.Proxy,
-	}
-	return s.Do(request)
+func (s *Session) Post(url string, options *Options) (Response, error) {
+	return s.Do(NewRequest(POST, url, options))
 }
 
-func (s *Session) Put(url string, options Options) (Response, error) {
-	request := Request{
-		Method:  PUT,
-		Url:     url,
-		Params:  options.Params,
-		Header:  options.Header,
-		Cookies: options.Cookies,
-		Data:    options.Data,
-		Json:    options.Json,
-		Proxy:   options.Proxy,
-	}
-	return s.Do(request)
+func (s *Session) Put(url string, options *Options) (Response, error) {
+	return s.Do(NewRequest(PUT, url, options))
 }
 
-func (s *Session) Patch(url string, options Options) (Response, error) {
-	request := Request{
-		Method:  PATCH,
-		Url:     url,
-		Params:  options.Params,
-		Header:  options.Header,
-		Cookies: options.Cookies,
-		Data:    options.Data,
-		Json:    options.Json,
-		Proxy:   options.Proxy,
-	}
-	return s.Do(request)
+func (s *Session) Patch(url string, options *Options) (Response, error) {
+	return s.Do(NewRequest(PATCH, url, options))
 }
 
-func (s *Session) Delete(url string, options Options) (Response, error) {
-	request := Request{
-		Method:  DELETE,
-		Url:     url,
-		Params:  options.Params,
-		Header:  options.Header,
-		Cookies: options.Cookies,
-		Data:    options.Data,
-		Json:    options.Json,
-		Proxy:   options.Proxy,
-	}
-	return s.Do(request)
+func (s *Session) Delete(url string, options *Options) (Response, error) {
+	return s.Do(NewRequest(DELETE, url, options))
 }
 
-func (s *Session) Head(url string, options Options) (Response, error) {
-	request := Request{
-		Method:  HEAD,
-		Url:     url,
-		Params:  options.Params,
-		Header:  options.Header,
-		Cookies: options.Cookies,
-		Data:    options.Data,
-		Json:    options.Json,
-		Proxy:   options.Proxy,
-	}
-	return s.Do(request)
+func (s *Session) Head(url string, options *Options) (Response, error) {
+	return s.Do(NewRequest(HEAD, url, options))
 }
 
-func (s *Session) Options(url string, options Options) (Response, error) {
-	request := Request{
-		Method:  OPTIONS,
-		Url:     url,
-		Params:  options.Params,
-		Header:  options.Header,
-		Cookies: options.Cookies,
-		Data:    options.Data,
-		Json:    options.Json,
-		Proxy:   options.Proxy,
-	}
-	return s.Do(request)
+func (s *Session) Options(url string, options *Options) (Response, error) {
+	return s.Do(NewRequest(OPTIONS, url, options))
 }
