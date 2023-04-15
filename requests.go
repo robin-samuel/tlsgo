@@ -3,6 +3,7 @@ package tlsgo
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
 
@@ -23,7 +24,7 @@ type Request struct {
 	Text    string
 	Proxy   string
 	Size    int
-	http    *http.Request
+	Raw     string
 }
 
 type Options struct {
@@ -60,12 +61,6 @@ func NewRequest(method Method, url string, options *Options) Request {
 	return request
 }
 
-func (r *Request) Raw() []byte {
-	dump, _ := httputil.DumpRequest(r.http, true)
-	raw := append(dump, r.Body...)
-	return raw
-}
-
 func (s *Session) Do(request Request) (Response, error) {
 
 	var response Response
@@ -90,7 +85,9 @@ func (s *Session) Do(request Request) (Response, error) {
 	// Set Proxy
 	if request.Proxy != "" {
 		s.Proxy = request.Proxy
-		s.client.SetProxy(request.Proxy)
+	}
+	if s.Proxy != s.client.GetProxy() {
+		s.client.SetProxy(s.Proxy)
 	}
 
 	// Create Request
@@ -142,6 +139,9 @@ func (s *Session) Do(request Request) (Response, error) {
 		return response, err
 	}
 
+	fmt.Println(string(dumpReq))
+	fmt.Println(string(dumpResp))
+
 	// Read Body Request
 	bodyReq, err := io.ReadAll(req.Body)
 	if err != nil {
@@ -161,7 +161,7 @@ func (s *Session) Do(request Request) (Response, error) {
 	request.Cookies = req.Cookies()
 	request.Body = bodyReq
 	request.Text = string(bodyReq)
-	request.http = req
+	request.Raw = string(dumpReq)
 
 	// Update Response
 	response.Request = request
@@ -175,7 +175,7 @@ func (s *Session) Do(request Request) (Response, error) {
 	response.Body = bodyRes
 	response.Text = string(bodyRes)
 	response.Size = len(dumpResp)
-	response.http = resp
+	response.Raw = string(dumpResp)
 
 	// Update Session
 	s.addUrl(response.URL)
