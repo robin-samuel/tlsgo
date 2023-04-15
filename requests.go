@@ -3,7 +3,6 @@ package tlsgo
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/url"
 
@@ -138,9 +137,6 @@ func (s *Session) Do(request Request) (Response, error) {
 	if dumpResp, err = httputil.DumpResponse(resp, true); err != nil {
 		return response, err
 	}
-
-	fmt.Println(string(dumpReq))
-	fmt.Println(string(dumpResp))
 
 	// Read Body Request
 	bodyReq, err := io.ReadAll(req.Body)
