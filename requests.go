@@ -90,7 +90,7 @@ func (s *Session) Do(request Request) (Response, error) {
 	}
 
 	// Create Request
-	req, err := http.NewRequest(string(request.Method), request.Url, nil)
+	req, err := http.NewRequest(string(request.Method), u.String(), nil)
 	if err != nil {
 		return response, err
 	}

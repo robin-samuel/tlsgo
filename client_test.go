@@ -2,6 +2,7 @@ package tlsgo_test
 
 import (
 	"fmt"
+	"net/url"
 	"testing"
 
 	"github.com/robin-samuel/tlsgo"
@@ -10,7 +11,8 @@ import (
 func TestClient(t *testing.T) {
 	session := tlsgo.NewSession(tlsgo.Chrome112)
 	session.Proxy = "http://localhost:8888"
-	response, err := session.Get("https://www.robinsamuel.dev", nil)
+	params := url.Values{"q": {"golang"}}
+	response, err := session.Get("https://www.robinsamuel.dev", &tlsgo.Options{Params: params})
 	if err != nil {
 		t.Fatal(err)
 	}
