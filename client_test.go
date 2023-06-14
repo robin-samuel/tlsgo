@@ -9,7 +9,7 @@ import (
 )
 
 func TestClient(t *testing.T) {
-	session := tlsgo.NewSession(tlsgo.Chrome112)
+	session := tlsgo.NewSession(tlsgo.Chrome112, false)
 	session.Proxy = "http://localhost:8888"
 	params := url.Values{"q": {"golang"}}
 	response, err := session.Get("https://www.robinsamuel.dev", &tlsgo.Options{Params: params})

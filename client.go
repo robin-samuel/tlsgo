@@ -17,13 +17,16 @@ type Session struct {
 	Injection func(Response, error) (Response, error)
 }
 
-func NewSession(p Profile) *Session {
+func NewSession(p Profile, forceHttp1 bool) *Session {
 	jar := tlsclient.NewCookieJar()
 	options := []tlsclient.HttpClientOption{
 		tlsclient.WithTimeoutSeconds(30),
 		tlsclient.WithClientProfile(getTlsClientProfile(p)),
 		tlsclient.WithRandomTLSExtensionOrder(),
 		tlsclient.WithCookieJar(jar),
+	}
+	if forceHttp1 {
+		options = append(options, tlsclient.WithForceHttp1())
 	}
 	client, _ := tlsclient.NewHttpClient(tlsclient.NewNoopLogger(), options...)
 	session := &Session{client: client}
