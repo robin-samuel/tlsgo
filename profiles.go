@@ -22,6 +22,9 @@ const (
 	// Safari
 	Safari160    Profile = "Safari 160"
 	SafariIOS160 Profile = "Safari IOS 160"
+
+	// Android
+	Okhttp4Android10 Profile = "Okhttp4 Android 10"
 )
 
 func getTlsClientProfile(profile Profile) tlsclient.ClientProfile {
@@ -51,6 +54,11 @@ func getTlsClientProfile(profile Profile) tlsclient.ClientProfile {
 		return tlsclient.Safari_16_0
 	case SafariIOS160:
 		return tlsclient.Safari_IOS_16_0
+
+	// Android
+	case Okhttp4Android10:
+		return tlsclient.Okhttp4Android10
+
 	default:
 		return tlsclient.Chrome_112
 	}
